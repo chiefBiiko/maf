@@ -11,6 +11,8 @@ const me = process.argv[2]
 const peers = process.argv.slice(3)
 const swarm = topology(toAddress(me), peers.map(toAddress))
 const received = {}
+const id = Math.random()
+var seq = 0
 
 require('lookup-multicast-dns/global')  // now program resolves .local domains
 
@@ -24,15 +26,12 @@ swarm.on('connection', (socket, peer) => {
     received[data.from] = data.seq
     console.log(`${data.peer}> ${data.msg}`)
     streamSet.forEach(openSocket => {
-      if (openSocket !== socket) openSocket.write(data)
-      /* && !peer.startsWith(data.peer) */
+      if (openSocket !== socket && 
+          !peer.startsWith(data.peer)) openSocket.write(data)
     })
   })
   streamSet.add(socket)
 })
-
-const id = Math.random()
-var seq = 0
 
 process.stdin.on('data', data => {
   const msg = data.toString().trim()
