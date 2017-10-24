@@ -10,8 +10,9 @@ const me = process.argv[2]
 const channel = process.argv[3]
 
 if (!me || !channel || /h(elp)?$/i.test(me)) {
-  console.error('usage: node peercussion.js name channel\n' +
-                '\tname\tyour name\n\tchannel\tname of the channel to join')
+  return console.error('usage: node peercussion.js yourName channel\n' +
+                       '  yourName\tyour displayed name\n' +
+                       '  channel\tthe channel to join')
 } 
 
 const logs = scuttleup(levelup(`${me}.db`), { valueEncoding: 'json' })
