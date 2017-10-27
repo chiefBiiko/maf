@@ -30,6 +30,6 @@ swarm.on('connection', (socket, peer) => {
   console.log(`[ new peer connection from ${peer.host}:${peer.port} ]`)
   socket.pipe(logs.createReplicationStream({ live: true })).pipe(socket)
 })
-swarm.listen(hashToPort(me))
+swarm.listen(/false/i.test(process.argv[4]) ? hashToPort(me) : 80)
 swarm.join(channel, { announce: true })
 
