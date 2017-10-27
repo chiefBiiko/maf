@@ -33,3 +33,5 @@ swarm.on('connection', (socket, peer) => {
 swarm.listen(/false/i.test(process.argv[4]) ? hashToPort(me) : 80)
 swarm.join(channel, { announce: true })
 
+// in case ish wont work look at dat-swarm-defaults + default forwarded ports
+// and just punch that hole!
